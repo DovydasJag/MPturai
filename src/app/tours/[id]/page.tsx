@@ -40,9 +40,7 @@ export default async function TourPage({
 
       <div className="mt-4">
         <Badge>{tourCategoryLabels[tour.category]}</Badge>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight">
-          {tour.title}
-        </h1>
+        <h1 className="mt-2 text-2xl font-bold tracking-tight">{tour.title}</h1>
         <p className="text-muted mt-1 text-sm">
           {tour.location} · {tour.sqm} m² · completed{" "}
           {formatDate(tour.completedAt)}

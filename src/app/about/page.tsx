@@ -14,7 +14,9 @@ export default async function AboutPage() {
 
   return (
     <Container className="py-12">
-      <h1 className="text-2xl font-bold tracking-tight">About {siteConfig.name}</h1>
+      <h1 className="text-2xl font-bold tracking-tight">
+        About {siteConfig.name}
+      </h1>
       <p className="text-muted mt-4 max-w-2xl">
         We&apos;re a three-person team based in Lithuania, scanning properties
         into interactive 3D tours for real estate agents, hotels and retail

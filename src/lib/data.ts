@@ -48,7 +48,8 @@ const tours: Tour[] = [
     category: "real-estate",
     location: "Vilnius",
     sqm: 134,
-    summary: "Pre-sale tour for a developer selling four identical units off-plan.",
+    summary:
+      "Pre-sale tour for a developer selling four identical units off-plan.",
     completedAt: "2026-06-15",
     featured: false,
   },
@@ -58,7 +59,8 @@ const tours: Tour[] = [
     category: "hospitality",
     location: "Kaunas",
     sqm: 58,
-    summary: "Interior tour embedded on the café's website and Google Business Profile.",
+    summary:
+      "Interior tour embedded on the café's website and Google Business Profile.",
     completedAt: "2026-05-30",
     featured: false,
   },
@@ -68,7 +70,8 @@ const tours: Tour[] = [
     category: "retail",
     location: "Šiauliai",
     sqm: 210,
-    summary: "Furniture showroom tour with product tags planned for a future update.",
+    summary:
+      "Furniture showroom tour with product tags planned for a future update.",
     completedAt: "2026-05-12",
     featured: false,
   },

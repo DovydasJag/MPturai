@@ -15,8 +15,8 @@ export default function ContactPage() {
     <Container className="py-12">
       <h1 className="text-2xl font-bold tracking-tight">Get a quote</h1>
       <p className="text-muted mt-2 max-w-xl">
-        Tell us the property, its size and when you&apos;d like it scanned.
-        We serve {serviceArea} and usually reply within a day.
+        Tell us the property, its size and when you&apos;d like it scanned. We
+        serve {serviceArea} and usually reply within a day.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

@@ -17,7 +17,8 @@ const process = [
   {
     step: "2",
     title: "We scan on-site",
-    description: "A 3D scan takes 1–3 hours depending on the size of the space.",
+    description:
+      "A 3D scan takes 1–3 hours depending on the size of the space.",
   },
   {
     step: "3",

@@ -1,0 +1,8 @@
+# Keep line endings consistent across Windows/macOS/Linux teammates
+# so diffs show real changes, not \r\n churn.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.svg text eol=lf

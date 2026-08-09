@@ -6,27 +6,15 @@
  * Never hardcode hex values in components.
  */
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted: #6b7280;
-  --surface: #fafafa;
-  --surface-hover: #f0f0f0;
-  --border: #e5e5e5;
-  --border-strong: #d4d4d4;
-  --accent: #2563eb;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --muted: #9ca3af;
-    --surface: #131313;
-    --surface-hover: #1c1c1c;
-    --border: #262626;
-    --border-strong: #3a3a3a;
-    --accent: #60a5fa;
-  }
+  --background: #0d1117;
+  --foreground: #f0f0f0;
+  --muted: #8b949e;
+  --surface: #161b22;
+  --surface-hover: #21262d;
+  --border: #21262d;
+  --border-strong: #30363d;
+  --accent: #d4a24e;
+  --accent-hover: #e8b860;
 }
 
 @theme inline {
@@ -38,13 +26,70 @@
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-ibm-plex-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), Helvetica, sans-serif;
+}
+
+a {
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+::placeholder {
+  color: var(--muted);
+}
+
+@keyframes tourSwitch {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dashFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+.animate-reveal {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.animate-tour-switch {
+  animation: tourSwitch 0.4s ease;
+}
+
+.connector-path {
+  animation: dashFlow 1.4s linear infinite;
 }

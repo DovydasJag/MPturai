@@ -3,22 +3,13 @@
  * Change the name/description here instead of hunting through components.
  */
 export const siteConfig = {
-  name: "MPturai",
+  name: "MPTurai",
   description:
-    "Interactive 3D virtual tours for real estate, hospitality and retail businesses in Lithuania.",
+    "Interaktyvūs 3D turai butams, namams, biurams ir komercinėms patalpoms su Matterport.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  nav: [
-    { title: "Home", href: "/" },
-    { title: "Tours", href: "/tours" },
-    { title: "Services", href: "/services" },
-    { title: "About", href: "/about" },
-    { title: "Contact", href: "/contact" },
-  ],
-  // Placeholder contact details — replace with the real ones before launch.
   contact: {
-    email: "hello@mpturai.lt",
-    phone: "+370 6XX XXXXX",
-    serviceArea: "Vilnius, Kaunas, Klaipėda",
+    email: "info@mpturai.lt",
+    phone: "+370 659 08007",
   },
 } as const;
 

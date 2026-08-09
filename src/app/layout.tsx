@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 
-import { SiteFooter } from "@/components/layout/site-footer";
-import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/lib/config";
 
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: siteConfig.name,
+    default: `${siteConfig.name} — 3D Turai`,
     template: `%s · ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -31,14 +31,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="lt"
+      className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

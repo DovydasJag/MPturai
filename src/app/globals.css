@@ -36,10 +36,13 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
-a {
-  color: var(--foreground);
+@layer base {
+  a {
+    color: var(--foreground);
+  }
 }
 
 ::selection {

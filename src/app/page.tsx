@@ -266,13 +266,13 @@ export default function HomePage() {
   return (
     <div className="relative w-full bg-[#EAE3D6] text-[#1C1C1A]">
       {/* Header */}
-      <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-6 bg-[#EAE3D6] px-8 py-7">
+      <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-3 bg-[#EAE3D6] px-4 py-4 sm:gap-6 sm:px-8 sm:py-7">
         <a
           href="#top"
           onClick={scrollToTop}
-          className="flex items-center gap-4"
+          className="flex items-center gap-2 sm:gap-4"
         >
-          <div className="relative h-[50px] w-[50px] shrink-0">
+          <div className="relative h-9 w-9 shrink-0 sm:h-[50px] sm:w-[50px]">
             <Image
               src="/logo-beige.png"
               alt="MPTurai logo"
@@ -282,18 +282,18 @@ export default function HomePage() {
               priority
             />
           </div>
-          <span className="text-[26px] font-extrabold tracking-[-0.02em] text-[#1C1C1A]">
+          <span className="text-lg font-extrabold tracking-[-0.02em] text-[#1C1C1A] sm:text-[26px]">
             MPTurai
           </span>
         </a>
-        <nav className="flex items-center gap-9">
+        <nav className="flex items-center gap-2 sm:gap-9">
           <a
             href="#apie-mus"
             onClick={(e) => {
               e.preventDefault();
               scrollToId("apie-mus", "center", 1200);
             }}
-            className="rounded-full border border-[#1C1C1A]/15 px-4 py-2 text-sm text-[#7A7566] transition-colors hover:border-transparent hover:bg-[#182019] hover:text-[#D4A24E]"
+            className="rounded-full border border-[#1C1C1A]/15 px-3 py-1.5 text-xs text-[#7A7566] transition-colors hover:border-transparent hover:bg-[#182019] hover:text-[#D4A24E] sm:px-4 sm:py-2 sm:text-sm"
           >
             Apie mus
           </a>
@@ -303,7 +303,7 @@ export default function HomePage() {
               e.preventDefault();
               scrollToId("kainos", "center", 1200);
             }}
-            className="rounded-full border border-[#1C1C1A]/15 px-4 py-2 text-sm text-[#7A7566] transition-colors hover:border-transparent hover:bg-[#182019] hover:text-[#D4A24E]"
+            className="rounded-full border border-[#1C1C1A]/15 px-3 py-1.5 text-xs text-[#7A7566] transition-colors hover:border-transparent hover:bg-[#182019] hover:text-[#D4A24E] sm:px-4 sm:py-2 sm:text-sm"
           >
             Kainos
           </a>
@@ -314,7 +314,7 @@ export default function HomePage() {
       <section className="w-full bg-[#182019]">
         <div
           id="top"
-          className="mx-auto grid max-w-[1440px] grid-cols-1 items-center gap-14 px-8 py-16 md:grid-cols-2 md:py-24"
+          className="mx-auto grid max-w-[1440px] grid-cols-1 items-center gap-10 px-5 py-12 sm:gap-14 sm:px-8 sm:py-16 md:grid-cols-2 md:py-24"
         >
           <div className="relative min-w-0">
             <h1 className="animate-reveal m-0 max-w-[22ch] text-left text-[clamp(36px,5vw,60px)] leading-[1.05] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3] opacity-0">
@@ -338,7 +338,7 @@ export default function HomePage() {
               <button
                 onClick={prevTour}
                 aria-label="Ankstesnis turas"
-                className="shrink-0 px-1 text-[28px] leading-none text-[#9A9C93] hover:text-[#E8B860]"
+                className="shrink-0 px-0.5 text-xl leading-none text-[#9A9C93] hover:text-[#E8B860] sm:px-1 sm:text-[28px]"
               >
                 ‹
               </button>
@@ -363,12 +363,12 @@ export default function HomePage() {
               <button
                 onClick={nextTour}
                 aria-label="Kitas turas"
-                className="shrink-0 px-1 text-[28px] leading-none text-[#9A9C93] hover:text-[#E8B860]"
+                className="shrink-0 px-0.5 text-xl leading-none text-[#9A9C93] hover:text-[#E8B860] sm:px-1 sm:text-[28px]"
               >
                 ›
               </button>
             </div>
-            <div className="mt-3.5 flex flex-wrap gap-5 px-10 font-mono text-[12.5px] tracking-[0.06em] text-[#9A9C93]">
+            <div className="mt-3.5 flex flex-wrap gap-5 px-2 font-mono text-[12.5px] tracking-[0.06em] text-[#9A9C93] sm:px-10">
               <a
                 href={currentTourShowUrl}
                 target="_blank"
@@ -385,10 +385,10 @@ export default function HomePage() {
       {/* Apie mus */}
       <section
         id="apie-mus"
-        className="mx-auto mt-10 max-w-[1440px] px-8 pt-9 pb-24"
+        className="mx-auto mt-6 max-w-[1440px] px-5 pt-9 pb-16 sm:mt-10 sm:px-8 sm:pb-24"
       >
-        <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-2">
-          <div className="rounded-3xl bg-[#F1EBDE] p-10">
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-2 lg:gap-8">
+          <div className="rounded-3xl bg-[#F1EBDE] p-6 sm:p-10">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D4A24E]/40 bg-[#EAE3D6]">
               <ExpandIcon />
             </div>
@@ -402,7 +402,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="rounded-3xl bg-[#F1EBDE] p-10">
+          <div className="rounded-3xl bg-[#F1EBDE] p-6 sm:p-10">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D4A24E]/40 bg-[#EAE3D6] text-lg font-semibold text-[#D4A24E]">
               ?
             </div>
@@ -428,8 +428,8 @@ export default function HomePage() {
       </section>
 
       {/* Kaip tai veikia */}
-      <section className="mx-auto max-w-[1440px] px-8 pb-8">
-        <div className="rounded-3xl bg-[#182019] px-8 py-16 md:py-20">
+      <section className="mx-auto max-w-[1440px] px-5 pb-8 sm:px-8">
+        <div className="rounded-3xl bg-[#182019] px-5 py-12 sm:px-8 sm:py-16 md:py-20">
           <div className="text-center">
             <h2 className="animate-reveal m-0 text-[clamp(32px,4vw,44px)] leading-[1.1] font-medium tracking-[-0.03em] text-[#F3EFE3] opacity-0">
               Kaip tai veikia?
@@ -468,7 +468,10 @@ export default function HomePage() {
       </section>
 
       {/* Kainos */}
-      <section id="kainos-wrap" className="mx-auto max-w-[1440px] px-8 py-24">
+      <section
+        id="kainos-wrap"
+        className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-24"
+      >
         <div id="kainos">
           <h2 className="animate-reveal m-0 text-[clamp(24px,2.8vw,30px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
             Kainos
@@ -478,7 +481,7 @@ export default function HomePage() {
             {pricing.map((plan) => (
               <div
                 key={plan.tier}
-                className="flex flex-col rounded-2xl bg-[#F1EBDE] p-8"
+                className="flex flex-col rounded-2xl bg-[#F1EBDE] p-6 sm:p-8"
                 style={{
                   boxShadow:
                     "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
@@ -503,8 +506,11 @@ export default function HomePage() {
 
       {/* Kontaktai + Footer */}
       <div className="w-full bg-[#182019]">
-        <section id="kontaktai" className="mx-auto max-w-[1440px] px-8 py-24">
-          <div className="flex items-center gap-5">
+        <section
+          id="kontaktai"
+          className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-24"
+        >
+          <div className="flex items-start gap-4 sm:items-center sm:gap-5">
             <svg
               width="36"
               height="36"
@@ -572,7 +578,7 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer className="flex w-full flex-col gap-6 px-8 pt-6 pb-10 font-mono text-xs tracking-[0.06em] text-[#9A9C93]">
+        <footer className="flex w-full flex-col gap-6 px-5 pt-6 pb-10 font-mono text-xs tracking-[0.06em] text-[#9A9C93] sm:px-8">
           <a
             href="#top"
             onClick={scrollToTop}

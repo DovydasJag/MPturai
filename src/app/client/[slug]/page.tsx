@@ -1,7 +1,7 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { LogoMark } from "@/components/logo";
 import { getClientBySlug } from "@/lib/clients";
 import { siteConfig } from "@/lib/config";
 
@@ -29,16 +29,7 @@ export default async function ClientTourPage({
   return (
     <div className="flex min-h-full flex-col bg-[#EAE3D6]">
       <header className="flex items-center justify-center gap-3 px-6 py-6">
-        <div className="relative h-9 w-9 shrink-0">
-          <Image
-            src="/logo-beige.png"
-            alt="MPTurai logo"
-            fill
-            sizes="36px"
-            className="object-contain"
-            priority
-          />
-        </div>
+        <LogoMark className="h-9 w-9 shrink-0" />
         <span className="text-lg font-semibold tracking-[-0.02em] text-[#1C1C1A]">
           {client.name}
         </span>

@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+import { LogoMark } from "@/components/logo";
 import { siteConfig } from "@/lib/config";
 
 const tours = [
@@ -38,29 +38,6 @@ const steps = [
   {
     n: "3",
     text: "Gaunatė galutinį produktą — per 24-48h gaunatė nuosavą nuorodą su 3D turu.",
-  },
-];
-
-const pricing = [
-  {
-    tier: "STANDARTINIS",
-    price: "80 €",
-    features: [
-      "Objektams iki 50m2",
-      "Pilnas objekto 3D turas",
-      "Nuosava nuoroda 3D turui",
-      "1-2 dienų pristatymas",
-    ],
-  },
-  {
-    tier: "VIDUTINIS",
-    price: "100 €",
-    features: ["Visi standartinio privalumai", "Objektams 50m2-100m2"],
-  },
-  {
-    tier: "MAX",
-    price: "150+ €",
-    features: ["Visi vidutinio privalumai", "Objektams nuo 100m2-200m2"],
   },
 ];
 
@@ -123,12 +100,12 @@ function ExpandIcon() {
 }
 
 export default function HomePage() {
-  const [tourIndex, setTourIndex] = useState(0);
-  const [sent, setSent] = useState(false);
-  const [sendError, setSendError] = useState<string | null>(null);
-  const [sending, setSending] = useState(false);
+  const [tourIndex] = useState(0);
   const [ctaPop, setCtaPop] = useState(false);
-  const [submitPop, setSubmitPop] = useState(false);
+  const [quoteSent, setQuoteSent] = useState(false);
+  const [quoteError, setQuoteError] = useState<string | null>(null);
+  const [quoteSending, setQuoteSending] = useState(false);
+  const [quotePop, setQuotePop] = useState(false);
 
   const scrollAnimTokenRef = useRef<object | null>(null);
 
@@ -163,46 +140,63 @@ export default function HomePage() {
     currentTour.src ?? `https://my.matterport.com/show/?m=${currentTour.id}`;
   const currentTourShowUrl = `https://my.matterport.com/show/?m=${currentTour.id}`;
 
-  function prevTour() {
-    setTourIndex((i) => (i - 1 + tours.length) % tours.length);
-  }
-
-  function nextTour() {
-    setTourIndex((i) => (i + 1) % tours.length);
-  }
-
   function popCta() {
     setCtaPop(true);
     setTimeout(() => setCtaPop(false), 220);
   }
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setSubmitPop(true);
-    setTimeout(() => setSubmitPop(false), 220);
-
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    setSendError(null);
-    setSending(true);
-
+  async function sendInquiry(
+    payload: {
+      name: FormDataEntryValue | null;
+      contact: FormDataEntryValue | null;
+      details: string;
+    },
+    setters: {
+      setSending: (v: boolean) => void;
+      setSent: (v: boolean) => void;
+      setError: (v: string | null) => void;
+    },
+  ) {
+    setters.setError(null);
+    setters.setSending(true);
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.get("name"),
-          contact: data.get("contact"),
-          details: data.get("details"),
-        }),
+        body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error();
-      setSent(true);
+      setters.setSent(true);
     } catch {
-      setSendError("Nepavyko išsiųsti užklausos. Bandykite dar kartą.");
+      setters.setError("Nepavyko išsiųsti užklausos. Bandykite dar kartą.");
     } finally {
-      setSending(false);
+      setters.setSending(false);
     }
+  }
+
+  async function onQuoteSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setQuotePop(true);
+    setTimeout(() => setQuotePop(false), 220);
+
+    const data = new FormData(e.currentTarget);
+    const object = ((data.get("object") as string) ?? "").trim();
+    const date = ((data.get("date") as string) ?? "").trim();
+    const details = [
+      object && `Objektas: ${object}`,
+      date && `Norima data: ${date}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    await sendInquiry(
+      { name: data.get("name"), contact: data.get("contact"), details },
+      {
+        setSending: setQuoteSending,
+        setSent: setQuoteSent,
+        setError: setQuoteError,
+      },
+    );
   }
 
   function animateScrollTo(endY: number, duration = 3000) {
@@ -272,18 +266,10 @@ export default function HomePage() {
           onClick={scrollToTop}
           className="flex items-center gap-2 sm:gap-4"
         >
-          <div className="relative h-9 w-9 shrink-0 sm:h-[50px] sm:w-[50px]">
-            <Image
-              src="/logo-beige.png"
-              alt="MPTurai logo"
-              fill
-              sizes="50px"
-              className="object-contain"
-              priority
-            />
-          </div>
-          <span className="text-lg font-extrabold tracking-[-0.02em] text-[#1C1C1A] sm:text-[26px]">
-            MPTurai
+          <LogoMark className="h-9 w-9 shrink-0 sm:h-[50px] sm:w-[50px]" />
+          <span className="text-lg font-extrabold tracking-[-0.02em] sm:text-[26px]">
+            <span className="text-[#D4A24E]">MP</span>
+            <span className="text-[#1C1C1A]">Turai</span>
           </span>
         </a>
         <nav className="flex items-center gap-2 sm:gap-9">
@@ -298,14 +284,14 @@ export default function HomePage() {
             Apie mus
           </a>
           <a
-            href="#kainos"
+            href="#pasiulymas"
             onClick={(e) => {
               e.preventDefault();
-              scrollToId("kainos", "center", 1200);
+              scrollToId("pasiulymas", "center", 1200);
             }}
             className="rounded-full border border-[#1C1C1A]/15 px-3 py-1.5 text-xs text-[#7A7566] transition-colors hover:border-transparent hover:bg-[#182019] hover:text-[#D4A24E] sm:px-4 sm:py-2 sm:text-sm"
           >
-            Kainos
+            Kaina
           </a>
         </nav>
       </header>
@@ -321,10 +307,10 @@ export default function HomePage() {
               Parodykite savo objektą, prieš klientui atvykstant.
             </h1>
             <a
-              href="#kontaktai"
+              href="#pasiulymas"
               onClick={(e) => {
                 popCta();
-                handleNavClick(e, "kontaktai");
+                handleNavClick(e, "pasiulymas");
               }}
               className="mt-9 inline-block rounded-full bg-[#D4A24E] px-6.5 py-3.5 text-[15.5px] font-medium text-[#182019] transition-transform hover:bg-[#E8B860] active:scale-[0.93]"
               style={{ transform: ctaPop ? "scale(1.12)" : "scale(1)" }}
@@ -334,39 +320,23 @@ export default function HomePage() {
           </div>
 
           <div className="relative min-w-0">
-            <div className="flex items-center gap-3.5">
-              <button
-                onClick={prevTour}
-                aria-label="Ankstesnis turas"
-                className="shrink-0 px-0.5 text-xl leading-none text-[#9A9C93] hover:text-[#E8B860] sm:px-1 sm:text-[28px]"
+            <div className="relative aspect-[16/10] w-full">
+              <div
+                key={tourIndex}
+                className="animate-tour-switch absolute inset-0 overflow-hidden rounded-2xl border border-[#00000014] bg-[#EFE9DC]"
+                style={{
+                  boxShadow:
+                    "0 24px 60px rgba(0,0,0,0.35), 0 8px 20px rgba(0,0,0,0.2)",
+                }}
               >
-                ‹
-              </button>
-              <div className="relative aspect-[16/10] flex-1">
-                <div
-                  key={tourIndex}
-                  className="animate-tour-switch absolute inset-0 overflow-hidden rounded-2xl border border-[#00000014] bg-[#EFE9DC]"
-                  style={{
-                    boxShadow:
-                      "0 24px 60px rgba(0,0,0,0.35), 0 8px 20px rgba(0,0,0,0.2)",
-                  }}
-                >
-                  <iframe
-                    src={currentTourSrc}
-                    title="Matterport 3D turas"
-                    allow="fullscreen; xr-spatial-tracking"
-                    allowFullScreen
-                    className="block h-full w-full border-0"
-                  />
-                </div>
+                <iframe
+                  src={currentTourSrc}
+                  title="Matterport 3D turas"
+                  allow="fullscreen; xr-spatial-tracking"
+                  allowFullScreen
+                  className="block h-full w-full border-0"
+                />
               </div>
-              <button
-                onClick={nextTour}
-                aria-label="Kitas turas"
-                className="shrink-0 px-0.5 text-xl leading-none text-[#9A9C93] hover:text-[#E8B860] sm:px-1 sm:text-[28px]"
-              >
-                ›
-              </button>
             </div>
             <div className="mt-3.5 flex flex-wrap gap-5 px-2 font-mono text-[12.5px] tracking-[0.06em] text-[#9A9C93] sm:px-10">
               <a
@@ -380,6 +350,50 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Statistika — kodėl 3D turai parduoda */}
+      <section className="mx-auto max-w-[1440px] px-5 pt-14 pb-2 sm:px-8 sm:pt-20 sm:pb-4">
+        <div className="text-center">
+          <h2 className="animate-reveal m-0 mx-auto max-w-[22ch] text-[clamp(26px,3.4vw,40px)] leading-[1.1] font-medium tracking-[-0.03em] text-balance opacity-0">
+            Su 3D turu parduosite greičiau ir brangiau
+          </h2>
+          <div className="mx-auto mt-5 h-px w-[90px] bg-[#D4A24E]" />
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {[
+            { value: "9%", label: "aukštesnė pardavimo kaina" },
+            { value: "31%", label: "greitesnis pardavimas" },
+            { value: "87%", label: "daugiau skelbimo peržiūrų" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center rounded-2xl bg-[#F1EBDE] px-6 py-9 text-center"
+              style={{
+                boxShadow:
+                  "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
+              }}
+            >
+              <span className="font-mono text-[11px] tracking-[0.18em] text-[#D4A24E]">
+                IKI
+              </span>
+              <div className="mt-1.5 text-[clamp(44px,5vw,60px)] leading-none font-semibold tracking-[-0.02em] text-[#1C1C1A]">
+                {stat.value}
+              </div>
+              <p className="mt-3 max-w-[18ch] text-[16px] leading-snug text-[#7A7566]">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mx-auto mt-8 max-w-[68ch] text-center text-[16px] leading-relaxed text-[#7A7566]">
+          Atskiras kontroliuojamas tyrimas parodė, kad būstai su 3D skaitmeniniu
+          dvyniu parduodami{" "}
+          <span className="font-medium text-[#1C1C1A]">20% greičiau</span> ir{" "}
+          <span className="font-medium text-[#1C1C1A]">4,8% brangiau</span>.
+        </p>
       </section>
 
       {/* Apie mus */}
@@ -467,116 +481,84 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Kainos */}
+      {/* Pasiūlymas — individuali užklausa vietoj fiksuotų kainų */}
       <section
-        id="kainos-wrap"
+        id="pasiulymas-wrap"
         className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-24"
       >
-        <div id="kainos">
-          <h2 className="animate-reveal m-0 text-[clamp(24px,2.8vw,30px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
-            Kainos
+        <div id="pasiulymas" className="mx-auto max-w-[760px]">
+          <h2 className="animate-reveal m-0 text-center text-[clamp(28px,3.4vw,40px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
+            Gaukite pasiūlymą
           </h2>
-          <div className="mt-2 h-px w-10 bg-[#D4A24E]" />
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {pricing.map((plan) => (
-              <div
-                key={plan.tier}
-                className="flex flex-col rounded-2xl bg-[#F1EBDE] p-6 sm:p-8"
-                style={{
-                  boxShadow:
-                    "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
-                }}
+          <div className="mx-auto mt-4 h-px w-[90px] bg-[#D4A24E]" />
+          <p className="mx-auto mt-5 max-w-[52ch] text-center text-[17px] leading-relaxed text-[#7A7566]">
+            Kaina priklauso nuo objekto dydžio ir poreikių. Palikite užklausą ir
+            per vieną darbo dieną atsiųsime jums individualų pasiūlymą.
+          </p>
+
+          <div
+            className="mt-9 rounded-3xl bg-[#F1EBDE] p-6 sm:p-10"
+            style={{
+              boxShadow:
+                "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
+            }}
+          >
+            {quoteSent ? (
+              <p className="m-0 text-center text-[19px] text-[#B8863C]">
+                Užklausa išsiųsta. Pasiūlymą atsiųsime per vieną darbo dieną.
+              </p>
+            ) : (
+              <form
+                onSubmit={onQuoteSubmit}
+                className="grid grid-cols-1 gap-6 sm:grid-cols-2"
               >
-                <span className="font-mono text-sm tracking-[0.1em] text-[#D4A24E]">
-                  {plan.tier}
-                </span>
-                <div className="mt-3.5 text-[44px] font-semibold tracking-[-0.02em] text-[#1C1C1A]">
-                  {plan.price}
-                </div>
-                <ul className="mt-3.5 list-disc space-y-2 pl-4.5 text-[17px] leading-relaxed text-[#7A7566]">
-                  {plan.features.map((f) => (
-                    <li key={f}>{f}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Vardas ir pavardė"
+                  className="w-full min-w-0 border-0 border-b border-[#1C1C1A]/15 bg-transparent py-2.5 text-lg text-[#1C1C1A] outline-none placeholder:text-[#9A8F73] focus:border-[#D4A24E]"
+                />
+                <input
+                  type="text"
+                  name="contact"
+                  required
+                  placeholder="El. paštas arba telefonas"
+                  className="w-full min-w-0 border-0 border-b border-[#1C1C1A]/15 bg-transparent py-2.5 text-lg text-[#1C1C1A] outline-none placeholder:text-[#9A8F73] focus:border-[#D4A24E]"
+                />
+                <input
+                  type="text"
+                  name="object"
+                  placeholder="Objekto adresas ir plotas (m²)"
+                  className="w-full min-w-0 border-0 border-b border-[#1C1C1A]/15 bg-transparent py-2.5 text-lg text-[#1C1C1A] outline-none placeholder:text-[#9A8F73] focus:border-[#D4A24E] sm:col-span-2"
+                />
+                <input
+                  type="text"
+                  name="date"
+                  placeholder="Norima data"
+                  className="w-full min-w-0 border-0 border-b border-[#1C1C1A]/15 bg-transparent py-2.5 text-lg text-[#1C1C1A] outline-none placeholder:text-[#9A8F73] focus:border-[#D4A24E] sm:col-span-2"
+                />
+                {quoteError && (
+                  <p className="col-span-full m-0 text-sm text-red-500">
+                    {quoteError}
+                  </p>
+                )}
+                <button
+                  type="submit"
+                  disabled={quoteSending}
+                  className="col-span-full mt-2 justify-self-start rounded-full bg-[#D4A24E] px-7 py-4 text-[17px] font-medium text-[#182019] transition-transform hover:bg-[#E8B860] active:scale-[0.93] disabled:opacity-60"
+                  style={{ transform: quotePop ? "scale(1.12)" : "scale(1)" }}
+                >
+                  {quoteSending ? "Siunčiama…" : "Gauti pasiūlymą"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Kontaktai + Footer */}
+      {/* Footer */}
       <div className="w-full bg-[#182019]">
-        <section
-          id="kontaktai"
-          className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-24"
-        >
-          <div className="flex items-start gap-4 sm:items-center sm:gap-5">
-            <svg
-              width="36"
-              height="36"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#D4A24E"
-              strokeWidth="1.4"
-              className="shrink-0"
-            >
-              <rect x="3" y="5" width="18" height="14" rx="1.5" />
-              <path d="M3 6.5l9 6.5 9-6.5" />
-            </svg>
-            <h2 className="animate-reveal m-0 text-[clamp(26px,3.2vw,34px)] leading-[1.1] font-medium tracking-[-0.03em] text-[#F3EFE3] opacity-0">
-              Kad kiekviena diena būtu atvirų durų diena.
-            </h2>
-          </div>
-          <p className="mt-3.5 mb-9 max-w-[50ch] text-[18px] leading-relaxed text-[#9A9C93]">
-            Atsakome per vieną darbo dieną.
-          </p>
-
-          {sent ? (
-            <p className="m-0 text-[19px] text-[#E8B860]">
-              Užklausa išsiųsta. Susisieksime per vieną darbo dieną.
-            </p>
-          ) : (
-            <form
-              onSubmit={onSubmit}
-              className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2"
-            >
-              <input
-                type="text"
-                name="name"
-                required
-                placeholder="Vardas ir pavardė"
-                className="w-full min-w-0 border-0 border-b border-[#30392F] bg-transparent py-2.5 text-lg text-[#F3EFE3] outline-none placeholder:text-[#9A9C93] focus:border-[#D4A24E]"
-              />
-              <input
-                type="text"
-                name="contact"
-                required
-                placeholder="El. paštas arba telefonas"
-                className="w-full min-w-0 border-0 border-b border-[#30392F] bg-transparent py-2.5 text-lg text-[#F3EFE3] outline-none placeholder:text-[#9A9C93] focus:border-[#D4A24E]"
-              />
-              <textarea
-                rows={3}
-                name="details"
-                placeholder="Objekto adresas, plotas ir norima data"
-                className="mt-2.5 min-w-0 resize-y border-0 border-b border-[#30392F] bg-transparent text-lg text-[#F3EFE3] outline-none placeholder:text-[#9A9C93] focus:border-[#D4A24E] sm:col-span-2"
-              />
-              {sendError && (
-                <p className="col-span-full m-0 text-sm text-red-400">
-                  {sendError}
-                </p>
-              )}
-              <button
-                type="submit"
-                disabled={sending}
-                className="col-span-full mt-2 justify-self-start rounded-full bg-[#D4A24E] px-7 py-4 text-[17px] font-medium text-[#182019] transition-transform hover:bg-[#E8B860] active:scale-[0.93] disabled:opacity-60"
-                style={{ transform: submitPop ? "scale(1.12)" : "scale(1)" }}
-              >
-                {sending ? "Siunčiama…" : "Siųsti užklausą"}
-              </button>
-            </form>
-          )}
-        </section>
-
         {/* Footer */}
         <footer className="flex w-full flex-col gap-6 px-5 pt-6 pb-10 font-mono text-xs tracking-[0.06em] text-[#9A9C93] sm:px-8">
           <a

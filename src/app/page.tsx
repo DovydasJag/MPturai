@@ -7,8 +7,8 @@ import { siteConfig } from "@/lib/config";
 
 const tours = [
   {
-    id: "jm5WwEA3HUN",
-    src: "https://my.matterport.com/show/?m=jm5WwEA3HUN&log=0&help=0&nt=0&play=1&qs=0&brand=1&dh=1&tour=1&gt=1&hr=1&mls=0&mt=1&tagNav=1&pin=1&portal=1&f=1&fp=1&nozoom=0&search=1&wh=1&kb=1&lp=0&title=0&tourcta=1&vr=1",
+    id: "T1yafRmFiT7",
+    src: "https://my.matterport.com/show/?m=T1yafRmFiT7&log=0&help=0&nt=0&play=1&qs=0&brand=1&dh=1&tour=1&gt=1&hr=1&mls=0&mt=1&tagNav=1&pin=1&portal=1&f=1&fp=1&nozoom=0&search=1&wh=1&kb=1&lp=0&title=0&tourcta=1&vr=1",
   },
   { id: "SxQL3iGyoKN" },
   { id: "j5ZFuAKZWtR" },

@@ -284,14 +284,14 @@ export default function HomePage() {
             Apie mus
           </a>
           <a
-            href="#pasiulymas"
+            href="#footer"
             onClick={(e) => {
               e.preventDefault();
-              scrollToId("pasiulymas", "center", 1200);
+              scrollToId("footer", "start", 1200);
             }}
             className="rounded-full border border-[#1C1C1A]/15 px-3 py-1.5 text-xs text-[#7A7566] transition-colors hover:border-transparent hover:bg-[#182019] hover:text-[#D4A24E] sm:px-4 sm:py-2 sm:text-sm"
           >
-            Kaina
+            Kontaktai
           </a>
         </nav>
       </header>
@@ -558,7 +558,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <div className="w-full bg-[#182019]">
+      <div id="footer" className="w-full bg-[#182019]">
         {/* Footer */}
         <footer className="flex w-full flex-col gap-6 px-5 pt-6 pb-10 font-mono text-xs tracking-[0.06em] text-[#9A9C93] sm:px-8">
           <a

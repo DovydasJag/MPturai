@@ -4,7 +4,9 @@ import type { NextRequest } from "next/server";
 const ROOT_DOMAIN = "mpturai.lt";
 
 export function proxy(request: NextRequest) {
-  const hostname = (request.headers.get("host") ?? "").split(":")[0];
+  const hostname = (request.headers.get("host") ?? "")
+    .split(":")[0]
+    .toLowerCase();
 
   const isRootHost =
     hostname === ROOT_DOMAIN ||

@@ -465,14 +465,14 @@ export default function HomePage() {
             <svg
               viewBox="0 0 1000 56"
               preserveAspectRatio="none"
-              className="connector-path pointer-events-none absolute top-[98px] left-0 hidden h-14 w-full lg:block"
+              className="connector-path pointer-events-none absolute top-[106px] left-0 hidden h-14 w-full lg:block"
               fill="none"
               stroke="#D4A24E"
               strokeWidth={2.5}
               strokeLinecap="round"
               strokeDasharray="9 9"
             >
-              <path d="M166.7 30 C 245 10, 305 50, 375 24 C 410 14, 450 20, 486 25" />
+              <path d="M166.7 20 C 245 8, 305 50, 375 24 C 410 14, 450 20, 486 25" />
               <path d="M514 25 C 550 30, 580 6, 650 22 C 700 40, 770 6, 833.3 26" />
             </svg>
           </div>

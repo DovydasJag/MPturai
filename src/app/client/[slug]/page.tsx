@@ -49,21 +49,14 @@ export default async function ClientTourPage({
   return (
     <div className="relative w-full bg-[#EAE3D6] text-[#1C1C1A]">
       {/* Header */}
-      <header className="sticky top-0 z-50 flex w-full items-center justify-between gap-3 bg-[#EAE3D6] px-4 py-4 sm:gap-6 sm:px-8 sm:py-7">
-        <a
-          href={siteConfig.url}
-          className="flex items-center gap-2 sm:gap-4"
-          aria-label={siteConfig.name}
-        >
+      <header className="flex w-full items-center justify-center gap-3 bg-[#EAE3D6] px-4 py-4 sm:gap-6 sm:px-8 sm:py-7">
+        <div className="flex items-center gap-2 sm:gap-4">
           <LogoMark className="h-9 w-9 shrink-0 sm:h-[50px] sm:w-[50px]" />
           <span className="text-lg font-extrabold tracking-[-0.02em] sm:text-[26px]">
             <span className="text-[#D4A24E]">MP</span>
             <span className="text-[#1C1C1A]">Turai</span>
           </span>
-        </a>
-        <span className="rounded-full border border-[#1C1C1A]/15 px-3 py-1.5 text-xs text-[#7A7566] sm:px-4 sm:py-2 sm:text-sm">
-          {client.name}
-        </span>
+        </div>
       </header>
 
       {/* Turas */}
@@ -72,7 +65,10 @@ export default async function ClientTourPage({
           <span className="font-mono text-xs tracking-[0.1em] text-[#D4A24E]">
             3D TURAS
           </span>
-          <h1 className="animate-reveal m-0 mt-3 max-w-[24ch] text-[clamp(30px,4.2vw,48px)] leading-[1.08] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3] opacity-0">
+          <h1
+            data-reveal
+            className="m-0 mt-3 max-w-[24ch] text-[clamp(30px,4.2vw,48px)] leading-[1.08] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3]"
+          >
             {client.title}
           </h1>
 
@@ -106,39 +102,37 @@ export default async function ClientTourPage({
       </section>
 
       {/* Aprašymas */}
-      <section className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8 sm:py-24">
-        <h2 className="animate-reveal m-0 text-[clamp(24px,2.8vw,30px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
+      <section className="mx-auto max-w-[1200px] px-5 py-12 sm:px-8 sm:py-16">
+        <h2
+          data-reveal
+          className="m-0 text-[clamp(24px,2.8vw,30px)] leading-[1.1] font-medium tracking-[-0.03em]"
+        >
           Apie objektą
         </h2>
         <div className="mt-2 h-px w-10 bg-[#D4A24E]" />
 
-        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.6fr_1fr]">
-          <div
-            className="rounded-2xl bg-[#F1EBDE] p-6 sm:p-8"
-            style={{
-              boxShadow:
-                "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
-            }}
-          >
-            {paragraphs.map((paragraph) => (
-              <p
-                key={paragraph.slice(0, 40)}
-                className="m-0 mb-4 text-[17px] leading-relaxed text-[#7A7566] last:mb-0"
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
+        <div
+          data-reveal
+          className="mt-7 rounded-2xl bg-[#F1EBDE] p-6 sm:p-8"
+          style={{
+            boxShadow:
+              "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
+          }}
+        >
+          <div className="flex flex-col gap-7 lg:flex-row lg:gap-12">
+            <div className="max-w-[68ch] lg:flex-1">
+              {paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 40)}
+                  className="m-0 mb-4 text-[17px] leading-relaxed text-[#7A7566] last:mb-0"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
 
-          {client.details && client.details.length > 0 && (
-            <div
-              className="rounded-2xl bg-[#F1EBDE] p-6 sm:p-8"
-              style={{
-                boxShadow:
-                  "0 24px 60px rgba(0,0,0,0.08), 0 8px 20px rgba(0,0,0,0.05)",
-              }}
-            >
-              <dl className="m-0 grid grid-cols-2 gap-x-6 gap-y-5 lg:grid-cols-1">
+            {client.details && client.details.length > 0 && (
+              <dl className="m-0 flex flex-wrap gap-x-12 gap-y-5 border-t border-[#1C1C1A]/10 pt-6 lg:w-[190px] lg:shrink-0 lg:flex-col lg:gap-y-6 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-10">
                 {client.details.map((detail) => (
                   <div key={detail.label}>
                     <dt className="font-mono text-xs tracking-[0.1em] text-[#D4A24E]">
@@ -150,17 +144,22 @@ export default async function ClientTourPage({
                   </div>
                 ))}
               </dl>
-            </div>
-          )}
+            )}
+          </div>
         </div>
+      </section>
 
-        {client.contact && (client.contact.phone || client.contact.email) && (
-          <div className="mt-6 rounded-2xl bg-[#182019] px-6 py-7 sm:px-8">
-            <span className="font-mono text-xs tracking-[0.1em] text-[#D4A24E]">
-              SUSISIEKITE
-            </span>
-            <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-8">
-              <span className="text-[19px] text-[#F3EFE3]">{client.name}</span>
+      {/* Footer — kliento kontaktai */}
+      <div className="w-full bg-[#182019]">
+        <footer className="mx-auto flex max-w-[1200px] flex-col items-center gap-3 px-5 py-12 text-center sm:px-8">
+          <span className="font-mono text-xs tracking-[0.1em] text-[#D4A24E]">
+            KONTAKTAI
+          </span>
+          <span className="text-[22px] tracking-[-0.02em] text-[#F3EFE3]">
+            {client.name}
+          </span>
+          {client.contact && (client.contact.phone || client.contact.email) && (
+            <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-9">
               {client.contact.phone && (
                 <a
                   href={`tel:${client.contact.phone.replace(/\s/g, "")}`}
@@ -178,16 +177,7 @@ export default async function ClientTourPage({
                 </a>
               )}
             </div>
-          </div>
-        )}
-      </section>
-
-      {/* Footer */}
-      <div className="w-full bg-[#182019]">
-        <footer className="flex w-full items-center justify-center px-5 py-8 font-mono text-xs tracking-[0.06em] text-[#9A9C93] sm:px-8">
-          <a href={siteConfig.url} className="hover:text-[#E8B860]">
-            Sukurkite savo 3D turą su MPTurai ↗
-          </a>
+          )}
         </footer>
       </div>
     </div>

@@ -45,8 +45,6 @@ mokykla, darželis, prekybos centras ir viešojo transporto stotelė.`,
     details: [
       { label: "Plotas", value: "54 m²" },
       { label: "Kambariai", value: "2" },
-      { label: "Aukštas", value: "3 / 5" },
-      { label: "Būklė", value: "Įrengtas" },
     ],
     contact: {
       phone: "+370 600 00000",

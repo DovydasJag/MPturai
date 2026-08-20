@@ -301,7 +301,10 @@ export default function HomePage() {
           className="mx-auto grid max-w-[1440px] grid-cols-1 items-center gap-10 px-5 py-12 sm:gap-14 sm:px-8 sm:py-16 md:grid-cols-2 md:py-24"
         >
           <div className="relative min-w-0">
-            <h1 className="animate-reveal m-0 max-w-[22ch] text-left text-[clamp(36px,5vw,60px)] leading-[1.05] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3] opacity-0">
+            <h1
+              data-reveal
+              className="m-0 max-w-[22ch] text-left text-[clamp(36px,5vw,60px)] leading-[1.05] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3]"
+            >
               Parodykite savo objektą, prieš klientui atvykstant.
             </h1>
             <a
@@ -353,7 +356,10 @@ export default function HomePage() {
       {/* Statistika — kodėl 3D turai parduoda */}
       <section className="mx-auto max-w-[1440px] px-5 pt-14 pb-2 sm:px-8 sm:pt-20 sm:pb-4">
         <div className="text-center">
-          <h2 className="animate-reveal m-0 mx-auto max-w-[22ch] text-[clamp(26px,3.4vw,40px)] leading-[1.1] font-medium tracking-[-0.03em] text-balance opacity-0">
+          <h2
+            data-reveal
+            className="m-0 mx-auto max-w-[22ch] text-[clamp(26px,3.4vw,40px)] leading-[1.1] font-medium tracking-[-0.03em] text-balance"
+          >
             Su 3D turu parduosite greičiau ir brangiau
           </h2>
           <div className="mx-auto mt-5 h-px w-[90px] bg-[#D4A24E]" />
@@ -367,6 +373,7 @@ export default function HomePage() {
           ].map((stat) => (
             <div
               key={stat.label}
+              data-reveal
               className="flex flex-col items-center rounded-2xl bg-[#F1EBDE] px-6 py-9 text-center"
               style={{
                 boxShadow:
@@ -387,8 +394,8 @@ export default function HomePage() {
         </div>
 
         <p className="mx-auto mt-8 max-w-[68ch] text-center text-[16px] leading-relaxed text-[#7A7566]">
-          Atskiras kontroliuojamas tyrimas parodė, kad būstai su 3D skaitmeniniu
-          dvyniu parduodami{" "}
+          Atskiras tyrimas parodė, kad būstai su 3D skaitmeniniu dvyniu
+          parduodami{" "}
           <span className="font-medium text-[#1C1C1A]">20% greičiau</span> ir{" "}
           <span className="font-medium text-[#1C1C1A]">4,8% brangiau</span>.
         </p>
@@ -404,7 +411,10 @@ export default function HomePage() {
             <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D4A24E]/40 bg-[#EAE3D6]">
               <ExpandIcon />
             </div>
-            <h2 className="animate-reveal m-0 mt-5 text-[clamp(26px,3vw,34px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
+            <h2
+              data-reveal
+              className="m-0 mt-5 text-[clamp(26px,3vw,34px)] leading-[1.1] font-medium tracking-[-0.03em]"
+            >
               Kuo užsiema MPTurai?
             </h2>
             <p className="mt-4 max-w-[52ch] text-[18px] leading-relaxed text-[#7A7566]">
@@ -418,7 +428,10 @@ export default function HomePage() {
             <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#D4A24E]/40 bg-[#EAE3D6] text-lg font-semibold text-[#D4A24E]">
               ?
             </div>
-            <h2 className="animate-reveal m-0 mt-5 text-[clamp(26px,3vw,34px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
+            <h2
+              data-reveal
+              className="m-0 mt-5 text-[clamp(26px,3vw,34px)] leading-[1.1] font-medium tracking-[-0.03em]"
+            >
               Kodel mes?
             </h2>
             <div className="mt-3 h-px w-10 bg-[#D4A24E]" />
@@ -443,7 +456,10 @@ export default function HomePage() {
       <section className="mx-auto max-w-[1440px] px-5 pb-8 sm:px-8">
         <div className="rounded-3xl bg-[#182019] px-5 py-12 sm:px-8 sm:py-16 md:py-20">
           <div className="text-center">
-            <h2 className="animate-reveal m-0 text-[clamp(32px,4vw,44px)] leading-[1.1] font-medium tracking-[-0.03em] text-[#F3EFE3] opacity-0">
+            <h2
+              data-reveal
+              className="m-0 text-[clamp(32px,4vw,44px)] leading-[1.1] font-medium tracking-[-0.03em] text-[#F3EFE3]"
+            >
               Kaip tai veikia?
             </h2>
             <div className="mx-auto mt-6 h-px w-[120px] bg-[#D4A24E]" />
@@ -452,6 +468,7 @@ export default function HomePage() {
             {steps.map((step) => (
               <div
                 key={step.n}
+                data-reveal
                 className="flex flex-col items-center px-6 text-center"
               >
                 <p className="m-0 flex min-h-[78px] items-start text-[18px] leading-relaxed text-[#9A9C93]">
@@ -485,7 +502,10 @@ export default function HomePage() {
         className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-24"
       >
         <div id="pasiulymas" className="mx-auto max-w-[760px]">
-          <h2 className="animate-reveal m-0 text-center text-[clamp(28px,3.4vw,40px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
+          <h2
+            data-reveal
+            className="m-0 text-center text-[clamp(28px,3.4vw,40px)] leading-[1.1] font-medium tracking-[-0.03em]"
+          >
             Gaukite pasiūlymą
           </h2>
           <div className="mx-auto mt-4 h-px w-[90px] bg-[#D4A24E]" />

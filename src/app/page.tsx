@@ -229,6 +229,8 @@ export default function HomePage() {
     id: string,
     align: "start" | "center" = "start",
     duration?: number,
+    /** Kiek pikselių sustoti aukščiau — kad turinio neuždengtų lipnus header. */
+    offset = 0,
   ) {
     const target = document.getElementById(id);
     if (!target) return;
@@ -238,7 +240,7 @@ export default function HomePage() {
       align === "center"
         ? targetTop - (window.innerHeight - rect.height) / 2
         : targetTop;
-    animateScrollTo(endY, duration);
+    animateScrollTo(endY - offset, duration);
   }
 
   function scrollToTop(e: React.MouseEvent<HTMLAnchorElement>) {
@@ -296,8 +298,15 @@ export default function HomePage() {
               Parodykite savo objektą, prieš klientui atvykstant.
             </h1>
             <a
-              href={`mailto:${siteConfig.contact.email}`}
-              onClick={popCta}
+              href="#pasiulymas"
+              onClick={(e) => {
+                e.preventDefault();
+                popCta();
+                const headerHeight =
+                  document.querySelector("header")?.getBoundingClientRect()
+                    .height ?? 0;
+                scrollToId("pasiulymas", "start", undefined, headerHeight + 64);
+              }}
               className="mt-9 inline-block rounded-full bg-[#D4A24E] px-6.5 py-3.5 text-[15.5px] font-medium text-[#182019] transition-transform hover:bg-[#E8B860] active:scale-[0.93]"
               style={{ transform: ctaPop ? "scale(1.12)" : "scale(1)" }}
             >

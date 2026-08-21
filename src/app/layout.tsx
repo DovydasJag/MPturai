@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 
-import { ScrollReveal } from "@/components/scroll-reveal";
 import { siteConfig } from "@/lib/config";
 
 import "./globals.css";
@@ -35,13 +34,7 @@ export default function RootLayout({
       lang="lt"
       className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
-        <noscript>
-          <style>{`[data-reveal]{opacity:1;transform:none}`}</style>
-        </noscript>
-        {children}
-        <ScrollReveal />
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

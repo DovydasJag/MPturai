@@ -14,6 +14,12 @@ function toParagraphs(text: string) {
     .filter(Boolean);
 }
 
+/**
+ * Nežinomas subdomenas (pvz. suklysta kliento pavardėje) grąžina tikrą 404,
+ * o ne 200 su „nerasta“ turiniu. Naujas klientas atsiranda po perkūrimo.
+ */
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return clients.map((client) => ({ slug: client.slug }));
 }
@@ -65,10 +71,7 @@ export default async function ClientTourPage({
           <span className="font-mono text-xs tracking-[0.1em] text-[#D4A24E]">
             3D TURAS
           </span>
-          <h1
-            data-reveal
-            className="m-0 mt-3 max-w-[24ch] text-[clamp(30px,4.2vw,48px)] leading-[1.08] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3]"
-          >
+          <h1 className="animate-reveal m-0 mt-3 max-w-[24ch] text-[clamp(30px,4.2vw,48px)] leading-[1.08] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3] opacity-0">
             {client.title}
           </h1>
 
@@ -103,16 +106,12 @@ export default async function ClientTourPage({
 
       {/* Aprašymas */}
       <section className="mx-auto max-w-[1200px] px-5 py-12 sm:px-8 sm:py-16">
-        <h2
-          data-reveal
-          className="m-0 text-[clamp(24px,2.8vw,30px)] leading-[1.1] font-medium tracking-[-0.03em]"
-        >
+        <h2 className="animate-reveal m-0 text-[clamp(24px,2.8vw,30px)] leading-[1.1] font-medium tracking-[-0.03em] opacity-0">
           Apie objektą
         </h2>
         <div className="mt-2 h-px w-10 bg-[#D4A24E]" />
 
         <div
-          data-reveal
           className="mt-7 rounded-2xl bg-[#F1EBDE] p-6 sm:p-8"
           style={{
             boxShadow:

@@ -52,6 +52,19 @@ export default async function ClientTourPage({
   const showUrl = `https://my.matterport.com/show/?m=${client.matterportId}`;
   const paragraphs = toParagraphs(client.description);
 
+  // Jei klientas pateikė bent vieną savo kontaktą, rodomi tik jo duomenys.
+  // Jei nepateikė nieko — rodomi MPTurai kontaktai, kad apačia neliktų tuščia.
+  const hasOwnContact = Boolean(
+    client.contact?.phone || client.contact?.email || client.name,
+  );
+  const contactName = hasOwnContact ? client.name : siteConfig.name;
+  const contactPhone = hasOwnContact
+    ? client.contact?.phone
+    : siteConfig.contact.phone;
+  const contactEmail = hasOwnContact
+    ? client.contact?.email
+    : siteConfig.contact.email;
+
   return (
     <div className="relative w-full bg-[#EAE3D6] text-[#1C1C1A]">
       {/* Header */}
@@ -74,6 +87,11 @@ export default async function ClientTourPage({
           <h1 className="animate-reveal m-0 mt-3 max-w-[24ch] text-[clamp(30px,4.2vw,48px)] leading-[1.08] font-medium tracking-[-0.035em] text-balance text-[#F3EFE3] opacity-0">
             {client.title}
           </h1>
+          {client.address && (
+            <p className="m-0 mt-3 text-[18px] text-[#9A9C93]">
+              {client.address}
+            </p>
+          )}
 
           <div
             className="relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-2xl border border-[#00000014] bg-[#EFE9DC]"
@@ -154,29 +172,29 @@ export default async function ClientTourPage({
           <span className="font-mono text-xs tracking-[0.1em] text-[#D4A24E]">
             KONTAKTAI
           </span>
-          <span className="text-[22px] tracking-[-0.02em] text-[#F3EFE3]">
-            {client.name}
-          </span>
-          {client.contact && (client.contact.phone || client.contact.email) && (
-            <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-9">
-              {client.contact.phone && (
-                <a
-                  href={`tel:${client.contact.phone.replace(/\s/g, "")}`}
-                  className="text-[17px] text-[#9A9C93] hover:text-[#E8B860]"
-                >
-                  {client.contact.phone}
-                </a>
-              )}
-              {client.contact.email && (
-                <a
-                  href={`mailto:${client.contact.email}`}
-                  className="text-[17px] text-[#9A9C93] hover:text-[#E8B860]"
-                >
-                  {client.contact.email}
-                </a>
-              )}
-            </div>
+          {contactName && (
+            <span className="text-[22px] tracking-[-0.02em] text-[#F3EFE3]">
+              {contactName}
+            </span>
           )}
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-9">
+            {contactPhone && (
+              <a
+                href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                className="text-[19px] text-[#F3EFE3] hover:text-[#E8B860]"
+              >
+                {contactPhone}
+              </a>
+            )}
+            {contactEmail && (
+              <a
+                href={`mailto:${contactEmail}`}
+                className="text-[17px] text-[#9A9C93] hover:text-[#E8B860]"
+              >
+                {contactEmail}
+              </a>
+            )}
+          </div>
         </footer>
       </div>
     </div>

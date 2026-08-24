@@ -7,8 +7,8 @@ import { siteConfig } from "@/lib/config";
 
 const tours = [
   {
-    id: "sgUejtUptyy",
-    src: "https://my.matterport.com/show/?m=sgUejtUptyy&log=0&help=0&nt=0&play=1&qs=0&brand=1&dh=1&tour=1&gt=1&hr=1&mls=0&mt=1&tagNav=1&pin=1&portal=1&f=1&fp=1&nozoom=0&search=1&wh=1&kb=1&lp=0&title=0&tourcta=1&vr=1",
+    id: "didM2m6j6qJ",
+    src: "https://my.matterport.com/show/?m=didM2m6j6qJ&log=0&help=0&nt=0&play=1&qs=0&brand=1&dh=1&tour=1&gt=1&hr=1&mls=2&mt=1&tagNav=1&pin=1&portal=1&f=1&fp=1&nozoom=0&search=1&wh=1&kb=1&lp=0&title=0&tourcta=1&vr=1",
   },
 ];
 
@@ -35,7 +35,7 @@ const steps = [
   },
   {
     n: "3",
-    text: "Gaunatė galutinį produktą — per 24-48h gaunatė nuosavą nuorodą su 3D turu.",
+    text: "Gaunate galutinį produktą — per 24-48h gaunate nuosavą nuorodą su 3D turu.",
   },
 ];
 

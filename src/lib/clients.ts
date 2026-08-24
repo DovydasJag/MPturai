@@ -8,12 +8,17 @@ export type ClientDetail = {
 export type Client = {
   /** Subdomain label, e.g. "smith" for smith.mpturai.lt. Visada mažosiomis raidėmis. */
   slug: string;
-  /** Kliento vardas — rodomas antraštėje, pvz. "Vardas Pavardenis". */
-  name: string;
+  /**
+   * Kliento vardas, rodomas kontaktų bloke. Neprivalomas — jei nenurodytas,
+   * puslapio apačioje rodomi MPTurai kontaktai.
+   */
+  name?: string;
   /** Matterport modelio ID iš Share > Copy link (my.matterport.com/show/?m=XXX). */
   matterportId: string;
-  /** Objekto pavadinimas arba adresas, pvz. "Aukštagirio g. 12, Vilnius". */
+  /** Objekto pavadinimas, pvz. "2 kambarių butas, Šeškinė". */
   title: string;
+  /** Neprivaloma: adresas, rodomas po pavadinimu virš 3D turo. */
+  address?: string;
   /**
    * Objekto aprašymas — tekstą pateikia klientas.
    * Tuščia eilutė tarp pastraipų sukuria naują pastraipą.
@@ -51,7 +56,20 @@ export type Client = {
  *   contact: { phone: "+370 600 00000", email: "vardas@pavyzdys.lt" },
  * }
  */
-export const clients: Client[] = [];
+export const clients: Client[] = [
+  {
+    slug: "seskine",
+    matterportId: "didM2m6j6qJ",
+    title: "2 kambarių butas, Šeškinė",
+    address: "Paberžės g., Šeškinė",
+    description: `Tai būstas žmogui, kuris vertina estetiką, komfortą ir nenori savo laiko skirti remontui. Čia viskas jau sukurta - nuo funkcionalaus išplanavimo iki paskutinių interjero detalių. PARDUODAMAS SU BALDAIS, BUITINE TECHNIKA IR TELEVIZORIAIS - GALIMA ĮSIKELTI IR GYVENTI IŠ KARTO.`,
+    details: [
+      { label: "Plotas", value: "51 m²" },
+      { label: "Kambariai", value: "2" },
+    ],
+    contact: { phone: "+370 605 07 898" },
+  },
+];
 
 export function getClientBySlug(slug: string) {
   return clients.find((c) => c.slug === slug.toLowerCase());

@@ -61,7 +61,7 @@ export const clients: Client[] = [
     slug: "paberzes6",
     matterportId: "didM2m6j6qJ",
     title: "2 kambarių butas, Šeškinė",
-    address: "Paberžės g., Šeškinė",
+    address: "Paberžės g. 6, Šeškinė",
     description: `Tai būstas žmogui, kuris vertina estetiką, komfortą ir nenori savo laiko skirti remontui. Čia viskas jau sukurta - nuo funkcionalaus išplanavimo iki paskutinių interjero detalių. PARDUODAMAS SU BALDAIS, BUITINE TECHNIKA IR TELEVIZORIAIS - GALIMA ĮSIKELTI IR GYVENTI IŠ KARTO.`,
     details: [
       { label: "Plotas", value: "51 m²" },

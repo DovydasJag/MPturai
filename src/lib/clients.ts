@@ -58,7 +58,7 @@ export type Client = {
  */
 export const clients: Client[] = [
   {
-    slug: "justinapetraityte",
+    slug: "paberzes6",
     matterportId: "didM2m6j6qJ",
     title: "2 kambarių butas, Šeškinė",
     address: "Paberžės g., Šeškinė",

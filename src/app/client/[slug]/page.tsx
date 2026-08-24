@@ -181,7 +181,7 @@ export default async function ClientTourPage({
             {contactPhone && (
               <a
                 href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                className="text-[19px] text-[#F3EFE3] hover:text-[#E8B860]"
+                className="text-[17px] text-[#9A9C93] hover:text-[#E8B860]"
               >
                 {contactPhone}
               </a>

@@ -67,7 +67,11 @@ export const clients: Client[] = [
       { label: "Plotas", value: "51 m²" },
       { label: "Kambariai", value: "2" },
     ],
-    contact: { phone: "+370 605 07 898" },
+    name: "Justina Petraitytė",
+    contact: {
+      phone: "+370 605 07 898",
+      email: "justinuke99@gmail.com",
+    },
   },
 ];
 

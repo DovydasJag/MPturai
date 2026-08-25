@@ -5,13 +5,59 @@ import { LogoMark } from "@/components/logo";
 import { clients, getClientBySlug, tourEmbedUrl } from "@/lib/clients";
 import { siteConfig } from "@/lib/config";
 
-/** Tuščia eilutė aprašyme = nauja pastraipa. Įtraukos iš šablono pašalinamos. */
-function toParagraphs(text: string) {
-  return text
-    .trim()
-    .split(/\n\s*\n/)
-    .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
-    .filter(Boolean);
+type Block =
+  { type: "paragraph"; text: string } | { type: "list"; items: string[] };
+
+/**
+ * Aprašymas skaidomas į pastraipas ir sąrašus:
+ * tuščia eilutė = nauja pastraipa, eilutė, prasidedanti „- “ = sąrašo punktas.
+ */
+function toBlocks(text: string): Block[] {
+  const blocks: Block[] = [];
+  let paragraph: string[] = [];
+  let items: string[] = [];
+
+  const flushParagraph = () => {
+    if (paragraph.length === 0) return;
+    blocks.push({
+      type: "paragraph",
+      text: paragraph.join(" ").replace(/\s+/g, " ").trim(),
+    });
+    paragraph = [];
+  };
+
+  const flushList = () => {
+    if (items.length === 0) return;
+    blocks.push({ type: "list", items });
+    items = [];
+  };
+
+  for (const rawLine of text.trim().split("\n")) {
+    const line = rawLine.trim();
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+    const bullet = line.match(/^[-–—•]\s+(.+)$/);
+    if (bullet) {
+      flushParagraph();
+      items.push(bullet[1].trim());
+    } else {
+      flushList();
+      paragraph.push(line);
+    }
+  }
+
+  flushParagraph();
+  flushList();
+  return blocks;
+}
+
+/** Pirmas tekstas be sąrašų — naudojamas <meta description>. */
+function toPlainSummary(text: string) {
+  const first = toBlocks(text).find((block) => block.type === "paragraph");
+  return first?.text;
 }
 
 /**
@@ -35,7 +81,7 @@ export async function generateMetadata({
 
   return {
     title: client.title,
-    description: toParagraphs(client.description)[0] ?? siteConfig.description,
+    description: toPlainSummary(client.description) ?? siteConfig.description,
   };
 }
 
@@ -50,7 +96,7 @@ export default async function ClientTourPage({
 
   const tourSrc = tourEmbedUrl(client.matterportId);
   const showUrl = `https://my.matterport.com/show/?m=${client.matterportId}`;
-  const paragraphs = toParagraphs(client.description);
+  const blocks = toBlocks(client.description);
 
   // Jei klientas pateikė bent vieną savo kontaktą, rodomi tik jo duomenys.
   // Jei nepateikė nieko — rodomi MPTurai kontaktai, kad apačia neliktų tuščia.
@@ -138,14 +184,25 @@ export default async function ClientTourPage({
         >
           <div className="flex flex-col gap-7 lg:flex-row lg:gap-12">
             <div className="max-w-[68ch] lg:flex-1">
-              {paragraphs.map((paragraph) => (
-                <p
-                  key={paragraph.slice(0, 40)}
-                  className="m-0 mb-4 text-[17px] leading-relaxed text-[#7A7566] last:mb-0"
-                >
-                  {paragraph}
-                </p>
-              ))}
+              {blocks.map((block, index) =>
+                block.type === "list" ? (
+                  <ul
+                    key={index}
+                    className="m-0 mb-4 list-disc space-y-2 pl-5 text-[17px] leading-relaxed text-[#7A7566] marker:text-[#D4A24E] last:mb-0"
+                  >
+                    {block.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p
+                    key={index}
+                    className="m-0 mb-4 text-[17px] leading-relaxed text-[#7A7566] last:mb-0"
+                  >
+                    {block.text}
+                  </p>
+                ),
+              )}
             </div>
 
             {client.details && client.details.length > 0 && (

@@ -73,6 +73,28 @@ export const clients: Client[] = [
       email: "justinuke99@gmail.com",
     },
   },
+  {
+    slug: "perkunkiemio",
+    matterportId: "bi3viYyyDSR",
+    title: "Vilnius, Pašilaičiai, Perkūnkiemio g.",
+    description: `BŪSTO PRIVALUMAI:
+
+- PARDUODAMA SU VISAIS BALDAIS IR BUITINE TECHNIKA
+- FUNKCIONALUS IŠPLANAVIMAS, ERDVŪS KAMBARIAI
+- 2 LIFTAI LAIPTINĖJE
+- ŠALIA NAMO PARKAS, ŽAIDIMŲ SKVERAS
+- STRATEGIŠKAI PUIKI VIETA (ŠALIA STOTELĖS, PARDUOTUVĖS, MOKYKLOS, DARŽELIAI, KAVINĖS)
+- ERDVI TERASA – PUIKI VIETA POILSIUI, RYTINEI KAVAI AR JAUKIEMS VAKARAMS
+- TAMSIUKAS – PATOGIAM PAPILDOMŲ DAIKTŲ LAIKYMUI
+- SEIFAS – SAUGIAM SVARBIŲ DAIKTŲ LAIKYMUI
+- PROJEKTORIAUS LAIKIKLIS IR Į LUBAS ĮLEIDŽIAMAS PROJEKCINIS EKRANAS – JAUKIEMS KINO VAKARAMS
+- PARKINGAS UŽ PAPILDOMĄ MOKESTĮ
+- YRA GALIMYBĖ ĮSIGYTI SANDĖLIUKĄ TAME PAČIAME AUKŠTE ŠALIA BUTO.`,
+    name: "Laurynas",
+    contact: {
+      phone: "+370 610 01 422",
+    },
+  },
 ];
 
 export function getClientBySlug(slug: string) {

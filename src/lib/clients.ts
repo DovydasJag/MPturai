@@ -90,6 +90,10 @@ export const clients: Client[] = [
 - PROJEKTORIAUS LAIKIKLIS IR Į LUBAS ĮLEIDŽIAMAS PROJEKCINIS EKRANAS – JAUKIEMS KINO VAKARAMS
 - PARKINGAS UŽ PAPILDOMĄ MOKESTĮ
 - YRA GALIMYBĖ ĮSIGYTI SANDĖLIUKĄ TAME PAČIAME AUKŠTE ŠALIA BUTO.`,
+    details: [
+      { label: "Plotas", value: "50 m²" },
+      { label: "Kambariai", value: "2" },
+    ],
     name: "Laurynas",
     contact: {
       phone: "+370 610 01 422",

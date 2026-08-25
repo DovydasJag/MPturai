@@ -97,6 +97,7 @@ export const clients: Client[] = [
     name: "Laurynas",
     contact: {
       phone: "+370 610 01 422",
+      email: "urtemortunaite@gmail.com",
     },
   },
 ];

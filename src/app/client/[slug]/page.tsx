@@ -234,7 +234,7 @@ export default async function ClientTourPage({
               {contactName}
             </span>
           )}
-          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-9">
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-5">
             {contactPhone && (
               <a
                 href={`tel:${contactPhone.replace(/\s/g, "")}`}

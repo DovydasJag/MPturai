@@ -5,12 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/logo";
 import { siteConfig } from "@/lib/config";
 
-const tours = [
-  {
-    id: "didM2m6j6qJ",
-    src: "https://my.matterport.com/show/?m=didM2m6j6qJ&log=0&help=0&nt=0&play=1&qs=0&brand=1&dh=1&tour=1&gt=1&hr=1&mls=2&mt=1&tagNav=1&pin=1&portal=1&f=1&fp=1&nozoom=0&search=1&wh=1&kb=1&lp=0&title=0&tourcta=1&vr=1",
-  },
-];
+const tourParams =
+  "log=0&help=0&nt=0&play=1&qs=0&brand=1&dh=1&tour=1&gt=1&hr=1&mls=2&mt=1&tagNav=1&pin=1&portal=1&f=1&fp=1&nozoom=0&search=1&wh=1&kb=1&lp=0&title=0&tourcta=1&vr=1";
+
+const tours = ["didM2m6j6qJ", "bi3viYyyDSR"].map((id) => ({
+  id,
+  src: `https://my.matterport.com/show/?m=${id}&${tourParams}`,
+}));
 
 const whyUs = [
   {
@@ -77,6 +78,24 @@ function WhyIcon({ icon }: { icon: (typeof whyUs)[number]["icon"] }) {
   );
 }
 
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d={direction === "left" ? "M15 5 8 12l7 7" : "M9 5l7 7-7 7"} />
+    </svg>
+  );
+}
+
 function ExpandIcon() {
   return (
     <svg
@@ -98,7 +117,7 @@ function ExpandIcon() {
 }
 
 export default function HomePage() {
-  const [tourIndex] = useState(0);
+  const [tourIndex, setTourIndex] = useState(0);
   const [ctaPop, setCtaPop] = useState(false);
   const [quoteSent, setQuoteSent] = useState(false);
   const [quoteError, setQuoteError] = useState<string | null>(null);
@@ -134,9 +153,13 @@ export default function HomePage() {
   }, []);
 
   const currentTour = tours[tourIndex];
-  const currentTourSrc =
-    currentTour.src ?? `https://my.matterport.com/show/?m=${currentTour.id}`;
+  const currentTourSrc = currentTour.src;
   const currentTourShowUrl = `https://my.matterport.com/show/?m=${currentTour.id}`;
+
+  /** Ciklas per pavyzdinius turus — nuo paskutinio grįžtama į pirmą. */
+  function stepTour(delta: number) {
+    setTourIndex((index) => (index + delta + tours.length) % tours.length);
+  }
 
   function popCta() {
     setCtaPop(true);
@@ -315,22 +338,46 @@ export default function HomePage() {
           </div>
 
           <div className="relative min-w-0">
-            <div className="relative aspect-[16/10] w-full">
-              <div
-                key={tourIndex}
-                className="animate-tour-switch absolute inset-0 overflow-hidden rounded-2xl border border-[#00000014] bg-[#EFE9DC]"
-                style={{
-                  boxShadow:
-                    "0 24px 60px rgba(0,0,0,0.35), 0 8px 20px rgba(0,0,0,0.2)",
-                }}
-              >
-                <iframe
-                  src={currentTourSrc}
-                  title="Matterport 3D turas"
-                  allow="fullscreen; xr-spatial-tracking"
-                  allowFullScreen
-                  className="block h-full w-full border-0"
-                />
+            {/* lg:px-14 palieka vietos rodyklėms šalia turo, o ne ant jo. */}
+            <div className="lg:px-14">
+              <div className="relative aspect-[16/10] w-full">
+                <div
+                  key={tourIndex}
+                  className="animate-tour-switch absolute inset-0 overflow-hidden rounded-2xl border border-[#00000014] bg-[#EFE9DC]"
+                  style={{
+                    boxShadow:
+                      "0 24px 60px rgba(0,0,0,0.35), 0 8px 20px rgba(0,0,0,0.2)",
+                  }}
+                >
+                  <iframe
+                    src={currentTourSrc}
+                    title="Matterport 3D turas"
+                    allow="fullscreen; xr-spatial-tracking"
+                    allowFullScreen
+                    className="block h-full w-full border-0"
+                  />
+                </div>
+
+                {tours.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => stepTour(-1)}
+                      aria-label="Ankstesnis turas"
+                      className="absolute top-1/2 left-2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#182019]/75 text-[#D4A24E] backdrop-blur-sm transition-colors hover:bg-[#182019] hover:text-[#E8B860] sm:h-11 sm:w-11 lg:-left-14"
+                    >
+                      <ChevronIcon direction="left" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => stepTour(1)}
+                      aria-label="Kitas turas"
+                      className="absolute top-1/2 right-2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#182019]/75 text-[#D4A24E] backdrop-blur-sm transition-colors hover:bg-[#182019] hover:text-[#E8B860] sm:h-11 sm:w-11 lg:-right-14"
+                    >
+                      <ChevronIcon direction="right" />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
             <div className="mt-3.5 flex flex-wrap gap-5 px-2 font-mono text-[12.5px] tracking-[0.06em] text-[#9A9C93] sm:px-10">
